@@ -2,19 +2,15 @@ local Players = game:GetService("Players")
 local RunService = game:GetService("RunService")
 local CoreGui = game:GetService("CoreGui")
 local LocalPlayer = Players.LocalPlayer
-
 if CoreGui:FindFirstChild("DeltaMegaAdminPanel") then
-    CoreGui.DeltaMegaAdminPanel:Destroy()
+CoreGui.DeltaMegaAdminPanel:Destroy()
 end
-
 local States = {Fly = false, Noclip = false, ESP = false, Speed = 16, Jump = 50, FlySpeed = 50, TargetPlayer = ""}
 local JailedPlayers, FrozenPlayers, espBoxes, activeJails = {}, {}, {}, {}
-
 local ScreenGui = Instance.new("ScreenGui")
 ScreenGui.Name = "DeltaMegaAdminPanel"
 ScreenGui.Parent = CoreGui
 ScreenGui.ResetOnSpawn = false
-
 local MainFrame = Instance.new("Frame")
 MainFrame.Size = UDim2.new(0, 520, 0, 340)
 MainFrame.Position = UDim2.new(0.5, -260, 0.5, -170)
@@ -23,11 +19,9 @@ MainFrame.BorderSizePixel = 0
 MainFrame.Active = true
 MainFrame.Draggable = true
 MainFrame.Parent = ScreenGui
-
 local UICorner = Instance.new("UICorner")
 UICorner.CornerRadius = UDim.new(0, 10)
 UICorner.Parent = MainFrame
-
 local ToggleButton = Instance.new("TextButton")
 ToggleButton.Size = UDim2.new(0, 50, 0, 50)
 ToggleButton.Position = UDim2.new(0.05, 0, 0.05, 0)
@@ -37,11 +31,9 @@ ToggleButton.TextSize = 24
 ToggleButton.TextColor3 = Color3.fromRGB(255, 255, 255)
 ToggleButton.Visible = false
 ToggleButton.Parent = ScreenGui
-
 local TCorner = Instance.new("UICorner")
 TCorner.CornerRadius = UDim.new(0, 25)
 TCorner.Parent = ToggleButton
-
 local MinBtn = Instance.new("TextButton")
 MinBtn.Size = UDim2.new(0, 30, 0, 30)
 MinBtn.Position = UDim2.new(1, -35, 0, 5)
@@ -51,20 +43,16 @@ MinBtn.TextColor3 = Color3.fromRGB(255, 70, 70)
 MinBtn.Font = Enum.Font.GothamBold
 MinBtn.TextSize = 16
 MinBtn.Parent = MainFrame
-
 MinBtn.MouseButton1Click:Connect(function() MainFrame.Visible = false ToggleButton.Visible = true end)
 ToggleButton.MouseButton1Click:Connect(function() MainFrame.Visible = true ToggleButton.Visible = false end)
-
 local Sidebar = Instance.new("Frame")
 Sidebar.Size = UDim2.new(0, 130, 1, 0)
 Sidebar.BackgroundColor3 = Color3.fromRGB(15, 15, 15)
 Sidebar.BorderSizePixel = 0
 Sidebar.Parent = MainFrame
-
 local SidebarCorner = Instance.new("UICorner")
 SidebarCorner.CornerRadius = UDim.new(0, 10)
 SidebarCorner.Parent = Sidebar
-
 local Title = Instance.new("TextLabel")
 Title.Size = UDim2.new(1, 0, 0, 45)
 Title.Text = "👑 DELTA ADMIN"
@@ -73,14 +61,12 @@ Title.Font = Enum.Font.GothamBold
 Title.TextSize = 13
 Title.BackgroundTransparency = 1
 Title.Parent = Sidebar
-
 local ContentContainer = Instance.new("Frame")
 ContentContainer.Size = UDim2.new(1, -145, 1, -20)
 ContentContainer.Position = UDim2.new(0, 137, 0, 10)
 ContentContainer.BackgroundTransparency = 1
 ContentContainer.Parent = MainFrame
 local Sections, Tabs = {}, {}
-
 local function CreateSection(name)
 local Frame = Instance.new("ScrollingFrame")
 Frame.Size = UDim2.new(1, 0, 1, 0)
@@ -114,15 +100,12 @@ end)
 table.insert(Tabs, TabBtn)
 return Frame
 end
-
 local SecAdmin = CreateSection("⚡ Comandos Admin")
 local SecPlayer = CreateSection("👤 Mi Jugador")
 local SecMovement = CreateSection("🏃 Movimiento")
 local SecVisuals = CreateSection("👁️ Visuales")
-
-Tabs[1].BackgroundColor3 = Color3.fromRGB(0, 130, 255)
+if #Tabs > 0 then Tabs[1].BackgroundColor3 = Color3.fromRGB(0, 130, 255) end
 Sections["⚡ Comandos Admin"].Visible = true
-
 local function GetTargetPlayers()
 if States.TargetPlayer:lower() == "all" or States.TargetPlayer == "" then return Players:GetPlayers() end
 local found = {}
@@ -133,7 +116,6 @@ end
 end
 return found
 end
-
 local function CreateButton(parent, text, callback)
 local Btn = Instance.new("TextButton")
 Btn.Size = UDim2.new(1, -10, 0, 35)
@@ -148,7 +130,6 @@ Corner.CornerRadius = UDim.new(0, 6)
 Corner.Parent = Btn
 Btn.MouseButton1Click:Connect(callback)
 end
-
 local function CreateToggle(parent, text, callback)
 local Btn = Instance.new("TextButton")
 Btn.Size = UDim2.new(1, -10, 0, 35)
@@ -169,7 +150,6 @@ Btn.TextColor3 = state and Color3.fromRGB(100, 255, 100) or Color3.fromRGB(255, 
 callback(state)
 end)
 end
-
 local function CreateSlider(parent, text, min, max, default, callback)
 local Frame = Instance.new("Frame")
 Frame.Size = UDim2.new(1, -10, 0, 45)
@@ -270,7 +250,6 @@ end)
 CreateButton(SecAdmin, "👢 Kick (Expulsar Simulado)", function()
     for _, p in pairs(GetTargetPlayers()) do if p == LocalPlayer then LocalPlayer:Kick("Expulsado") else p:Destroy() end end
 end)
-
 CreateSlider(SecPlayer, "Velocidad Caminar", 16, 500, 16, function(v) States.Speed = v end)
 CreateSlider(SecPlayer, "Poder de Salto", 50, 1000, 50, function(v) States.Jump = v end)
 
